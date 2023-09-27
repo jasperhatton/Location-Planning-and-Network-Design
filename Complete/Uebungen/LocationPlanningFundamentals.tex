@@ -1,0 +1,204 @@
+\titledquestion{Fundamentals of Location Planning}
+Mr. Maier is Key Account Manager at the automotive supplier \textsc{Turbo AG}, which specializes in the production of turbochargers, and received an inquiry from his key customer, \textsc{JoyRides AG}, as to whether it would be logistically feasible to supply five plants within Germany (currently only one) with a total requirement of 1,100 Units (currently 300 Units) from 2023 onward. Currently, one production line can produce and hold 550 Units per year. While the production capacity can be adapted to the new total demand by commissioning a second (identical) production line, the capacity of the production warehouse cannot be expanded further. The \textsc{JoyRides AG} will also place higher demands on the delivery service in the future. In particular, a maximum delivery time of two hours is desired for each plant, which would not be given with supply from the production warehouse. Mr. Maier considers an ``indirect delivery strategy" to be the right approach. However, he still lacks a concrete logistics concept to be able to realize the additional turnover of 800 Units * 1,200 EUR/Unit = 960,000~EUR per year. Even in the crisis-ridden supplier company, the goal of minimizing costs currently has top priority, although comparable competing offers are hard to find. Now, as the responsible logistics planner of \textsc{Turbo AG}, you are called upon to contribute a quantitative location model that serves the different needs to support the decision.
+
+\begin{enumerate}
+	\item Which typical location decisions can be represented by quantitative location models?
+	\begin{solution}
+	
+	\begin{center}
+			\setlength{\unitlength}{1cm}
+				\begin{picture}(12,5)
+ 					\put(0,0){\framebox(2,1){\phantom{Quantity}}}
+ 					\put(3,0){\framebox(2,1){\phantom{Positioning}}}
+ 					\put(6,0){\framebox(2,1){\phantom{Capacity}}}
+ 					\put(9,0){\framebox(2,1){\phantom{Connections}}}
+ 					\put(1.5,2){\framebox(2,1){\phantom{Location}}}
+ 					\put(7.5,2){\framebox(2,1){\phantom{Allocation}}}
+ 					\put(2.5,4){\framebox(6,1){\phantom{Facility decisions}}}
+				 	
+ 					\put(5.5,4){\line(0,-1){0.5}}
+ 					\put(5.5,3.5){\line(-1,0){3}}
+					\put(2.5,3.5){\line(0,-1){0.5}}
+ 					\put(5.5,3.5){\line(1,0){3}}
+					\put(8.5,3.5){\line(0,-1){0.5}}
+ 					
+ 					\put(2.5,2){\line(0,-1){0.5}}
+ 					\put(2.5,1.5){\line(-1,0){1.5}}
+ 					\put(1,1.5){\line(0,-1){0.5}}
+ 					\put(2.5,1.5){\line(1,0){1.5}}
+ 					\put(4,1.5){\line(0,-1){0.5}}
+ 					
+ 					\put(8.5,2){\line(0,-1){0.5}}
+ 					\put(8.5,1.5){\line(-1,0){1.5}}
+ 					\put(7,1.5){\line(0,-1){0.5}}
+ 					\put(8.5,1.5){\line(1,0){1.5}}
+ 					\put(10,1.5){\line(0,-1){0.5}}
+				\end{picture} \\
+				\end{center}
+			
+\textbf{Quantity:} How many sites should be operated/opened? \\
+\textbf{Positioning:} Where are sites to be operated/opened? \\
+\textbf{Capacity:}  How large should the respective site be? \\
+\textbf{Connections:} How should customer demand for products/services be allocated to the locations?\\
+
+\textbf{Note:} Location decisions may depend on each other. Example: The respective size (capacity) of the selected sites depends on the number of sites operated/opened.
+\end{solution}
+	%%% Lösung: Skript/F.19, Daskin/S.3; JA, aber die Entscheidungen sind dennoch interdependent, WEIL
+	\item  In Mr. Maier's view, what are the arguments in favor of decentralized product storage? What other motives for the establishment of decentralized/centralized storage locations are you aware of?
+\begin{solution}
+From Mr. Maier's point of view, the following two points speak in favor of decentralized storage:
+\begin{enumerate}
+	\item \phantom{Capacity bottleneck in the production warehouse}
+	\item \phantom{High requirements of the customer for the delivery service}
+\end{enumerate}
+
+Further motives for the establishment of centralized vs. decentralized storage locations:
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Decentralized Warehouses}&\textbf{Centralized Warehouses}\\
+\hline
+low barriers of entry&economies of scale\\
+nearer to the sales market&lower investment costs\\
+shorter transport routes/times&reduction of safety stocks levels\\
+\hline
+\end{tabular}
+\end{center}
+\end{solution}
+	%%% Lösung: Kapazitäts- und Lieferzeiterwägungen, GüntherTempelmeier/S.65, Skript/F.21
+	\ifprintanswers
+	\newpage
+	\else
+	\fi
+	\item How can location factors be categorized to be distinguished from one another? Give examples and also refer to the task.
+	%%% Lösung: Skript/F.33, GüntherTempelmeier/S.68-70; Merke: Bedeutung einzelner Standortfaktoren ist kontextabhängig (je nach Ebene der konkreten Standortentscheidung)
+\begin{solution}
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Qualitative Location Factors}&\textbf{Quantitative Location Factors}\\
+\hline
+soft criteria&hard criteria\\
+\hline
+variables that are difficult to evaluate numerically&measurable, countable variables\\
+\hline
+\phantom{Workforce quality}&\phantom{Transport costs}\\
+\phantom{Quality of life}&\phantom{Labor costs}\\
+\phantom{Political conditions}&\phantom{Taxes}\\
+\phantom{Bureaucracy}&\phantom{Transport connection/times}\\
+$\cdots$&$\cdots$ \\
+\hline
+\end{tabular}
+\end{center}
+\textbf{Merke:} {Note:} The importance of the individual location factors depends very much on the specific planning situation.
+\end{solution}
+\end{enumerate}
+
+Assume that you know $n=3$ (potential) new warehouse locations $j=1,\ldots,n$ with distances $d_{ij}$, fixed costs $f_j$, variable costs of warehousing (per unit) $h_j$ and a transportation cost rate (per unit) $c=1$. Furthermore, you know the requirements/production quantities $b_{i}$ of the $i=1,\ldots,m$ factories (customers). You are looking for an optimal connection of the factories to the warehouse locations so that the total costs of distribution are minimal.
+\begin{center}
+\begin{tabular}{c|ccc|c}
+ \diagbox{$i$}{$d_{ij}$}{$j$}     & 1     & 2     & 3     & $b_i$ \\
+\hline
+1     & 69    & 58    & 131   & 150 \\
+2     & 110   & 89    & 132   & 200 \\
+3     & 124   & 63    & 101   & 300 \\
+4     & 138   & 99    & 62    & 150 \\
+5     & 56    & 72    & 141   & 300 \\
+\hline
+$f_j$ & 15000 & 10000 & 18000 &  \\
+$h_j$ & 2     & 4     & 1     &  \\
+\end{tabular}\end{center}
+
+\begin{enumerate}
+\setcounter{enumi}{3}
+	\item \label{ZF} Which cost components are relevant to the decision here? Formulate an objective function that minimizes the total distribution costs across all warehouse and customer locations!
+	\begin{solution}
+	
+		The varying transport and warehousing costs as well as the fixed location costs are all relevant to the decision made with regards to the total costs of distribution. \\
+		\textbf{Note:} In order to ensure comparability, the fixed or variable costs of the different locations must each relate to the same planning horizon.\\
+		Given: \\
+		\begin{center}
+			\begin{tabular}{ll}
+				$i=1, \ldots, 5$& \phantom{Factories (customers)}\\
+				$j=1, \ldots, 3$& \phantom{Potential warehouse locations}\\
+				$c=1$& \phantom{Unit transportation cost rate $\left[EUR/unit\right]$}\\
+				$b_i$& \phantom{Requirements/productions quantities of the factories}\\
+				$h_j$& \phantom{Variable storage costs}\\
+				$f_j$& \phantom{Fixed location costs}\\
+				$d_{ij}$& \phantom{Distance from factory $i$ to warehouse $j$}\\
+			\end{tabular}
+		\end{center}
+		Seek:\\
+		\begin{center}
+			\begin{tabular}{ll}
+				$x_{ij}\geq 0$& \phantom{Transport quantity from $i$ to $j$}\\
+				$y_j\in \left\{0,1\right\}$& \phantom{Deciding whether the warehouse is open $\left(1\right)$ or not} $\left(0\right)$.
+			\end{tabular}
+		\end{center}
+		Objective Function:\\
+		
+		
+	\[z =\phantom{ \min \sum^{m}_{i=1}\sum^{n}_{j=1}c_{ij}x_{ij}+\sum_{j=1}^{n}f_j y_j}
+\]
+		
+		with allocation cost $c_{ij}:= h_j+cd_{ij}$ for covering one unit of customer $i$'s demand by warehouse~$j$.\\
+		Objective:\
+		Determine the amount and positioning of warehouse locations such that the sum of variable and fixed costs is minimized.\\
+		$\Rightarrow$ Uncapacitated, single-level, Facility/Warehouse Location Problem (UFLP)
+	\end{solution}
+	\item Determine an alternative solution that minimizes the objective function from part \ref{ZF}. if \emph{at most two} warehouses are to be opened! What simplifying assumptions have you implicitly made at this point?
+	% Lösung: siehe Exel-Sheet; Skript/F.9 und Notizen aus Domschke/Drexl(Standorte)
+	\begin{solution}
+		
+		\textbf{New constraint:} \phantom{$\sum_{j=1}^n y_j \leq 2$}. \\
+		
+		\textbf{Complete enumeration}\\
+		Question: How many possibilities are there to select one or two sites out of three potential sites?
+		Answer: \\
+		$n=3$, $k=1,2$, ${n \choose k}=\frac{n!}{k!\left(n-k\right)!}$\\
+		$\sum^{2}_{k=1}{n \choose k}={3 \choose 1}+{3 \choose 2}=3+3=6$\\
+		\vspace{0.1cm}\\
+		To determine the alternative solution that minimizes the objective function from part \ref{ZF}. six alternatives must be compared with each other, with respect to their total costs.\\
+		\vspace{0.1cm}\\
+		\uline{Calculation of total costs for all alternatives:}\\
+		%\framebox{$k=1$}\\
+			\begin{center}
+			\begin{tabular}{|lll|}
+			\hline
+			Number&Open Warhouses&Value of the Objective Function\\
+				\hline
+				$k=1$&$y_1=1$&$15,000+\left(2+69 \right)\cdot 150+\left(2+110\right)\cdot 200+\left(2+124\right)\cdot 300$\\
+				&&$+\left(2+138\right)\cdot 150+\left(2+56\right)\cdot 300=124,250$\\
+				\hline
+				&$y_2=1$&$10,000+\left(4+58\right)\cdot 150+\left(4+89\right)\cdot 200+\left(4+63\right)\cdot 300$\\
+				&&$+\left(4+99\right)\cdot 150+\left(4+72\right)\cdot 300=96,250$\\
+				\hline
+				&$y_3=1$&$18,000+\left(1+131\right)\cdot 150+\left(1+132\right)\cdot 200+\left(1+101\right)\cdot 300$\\
+				&&$+\left(1+62\right)\cdot 150\left(1+141\right)\cdot 300=147,050$\\
+				\hline
+				$k=2$&$y_1=1$, $y_2=1$&$15,000+10,000+\left(4+58\right)\cdot150+\left(4+89\right)\cdot 200+\left(4+63\right)\cdot300$\\
+				&&$\left(4+99\right)\cdot150+\left(2+56\right)\cdot300=105,850$\\
+				\hline
+				&$y_1=1$, $y_3=1$&$15,000+18,000+\left(2+69\right)\cdot150+\left(2+110\right)\cdot 200+\left(1+101\right)\cdot300$\\
+				&&$\left(1+62\right)\cdot150+\left(2+56\right)\cdot300=123,500$\\
+				\hline
+				&$y_2=1$, $y_3=1$&$10,000+18,000+\left(4+58\right)\cdot150+\left(4+89\right)\cdot 200+\left(4+63\right)\cdot300$\\
+				&&$\left(1+62\right)\cdot150+\left(4+72\right)\cdot300=108,250$\\
+				\hline
+			\end{tabular}
+		\end{center}
+		If at most two warehouses are to be opened, the alternative with minimum objective function value is to open only warehouse two.\\
+		\vspace{0.1cm}\\
+		\uline{Implicit Assumptions:}\\
+			\begin{itemize}
+				\item The warehouses have no capacity limitation.
+				\item The comparability of the warehouses with regard to the cost parameters is given.
+						\begin{itemize}
+							\item The fixed costs $f_i$ refer to the same planning period.
+							\item The variable unit costs of inventory $h_i$ refer to the same planning period.
+							\item The transportation costs $c_{ij}$ refer to the same planning period.
+						\end{itemize}
+				\item Cost is the dominant location decision factor.
+			\end{itemize}
+	\end{solution}
+\end{enumerate}

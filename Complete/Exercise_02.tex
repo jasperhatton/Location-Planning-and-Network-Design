@@ -1,0 +1,59 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Klausurmakro                 Version 07.09.2010  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% RWTH Aachen                                      %%
+%% Lehrstuhl für medizinische Informationstechnik   %%
+%% Thomas Schlebusch schlebusch@hia.rwth-aachen.de  %%
+%%                                                  %%
+%% Universität Mainz                                %%
+%% Lehrstuhl für BWL, insb. Logistikmanagement      %%
+%% Claudia Bode claudia.bode@uni-mainz.de           %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% English Translation: Jasper Hatton  [22.09.2023] %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Mit Musterlösung
+\documentclass[answers]{exam}
+%Ohne Musterlösung
+%\documentclass{exam}
+
+\newboolean{showgap}
+%\setboolean{showgap}{true}
+\setboolean{showgap}{false}
+
+
+\input header
+
+
+\begin{center}
+{\Large Exercise 02}
+\end{center}
+\footnotesize
+
+\input prepictex
+\input pictexwd
+\input postpictex
+
+
+\newcommand{\BigO} {\mbox{$\mathcal O$\,}}
+\newcommand{\Eins}{{1\!\!1}}
+\renewcommand{\emptyset}{\varnothing}
+\renewcommand{\epsilon}{\varepsilon}
+
+
+\begin{questions}
+
+
+
+\input Uebungen/TransportProblem
+
+
+\input Uebungen/UtilityValue
+
+
+\input Uebungen/BreakEven
+
+
+
+\end{questions}
+\end{document}

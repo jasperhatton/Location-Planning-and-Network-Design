@@ -1,0 +1,89 @@
+\titledquestion{Distance Measurement on a Plane}
+
+The popular fast food chain ``Ham Burger" would like to open four restaurants and a food storage facility in downtown Mainz. The coordinates of the four restaurants have already been set: (0,0), (6,6), (4,0), and (6,4). The first two restaurants are to be supplied with fresh meat from the grocery store four times a day, the other two require only twice a day. Assume that the delivery truck only has capacity for one delivery and therefore has to return to the storage facility immediately. After lengthy negotiations, it has now been decided that the storage facility will be built at coordinates (3,3). The General Manager of the four ``Ham Burger" restaurants would now like to know what transport costs he has to expect if there is a transport cost rate of 0.5 [EUR/km] and the distance is calculated with:
+\begin{enumerate}
+	\item the Manhattan distance.
+	
+	\begin{solution}
+	$d^1\left(\left(x,y\right),\left(a_i,b_i\right)\right):=\left|a_i-x\right|+\left|b_i-y\right|$\\
+	$d^1\left(\left(3,3\right),\left(0,0\right)\right):=\left|\phantom{0-3}\right|+\left|\phantom{0-3}\right|=\phantom{6}$\\
+	$d^1\left(\left(3,3\right),\left(6,6\right)\right):=\left|\phantom{6-3}\right|+\left|\phantom{6-3}\right|=\phantom{6}$\\
+	$d^1\left(\left(3,3\right),\left(4,0\right)\right):=\left|\phantom{4-3}\right|+\left|\phantom{0-3}\right|=\phantom{4}$\\
+	$d^1\left(\left(3,3\right),\left(6,4\right)\right):=\left|\phantom{6-3}\right|+\left|\phantom{4-3}\right|=\phantom{4}$\\
+	
+	Total transport distance \phantom{ $=2\cdot4\cdot6+2\cdot4\cdot6+2\cdot2\cdot4+2\cdot2\cdot4=128$}\\
+	Total transportation costs \phantom{$=128\cdot0.5=64$}
+	
+	\textbf{Note:} Manhattan distance often provides good estimates for smaller distances between customers and sites, such as in urban street networks.
+	\end{solution}
+	
+	\item the Euclidean distance.
+	
+	\begin{solution}
+	$d^2\left(\left(x,y\right),\left(a_i,b_i\right)\right):=\sqrt{\left(a_i-x\right)^2+\left(b_i-y\right)^2}$\\
+	$d^2\left(\left(3,3\right),\left(0,0\right)\right):=\sqrt{\left(\phantom{0-3}\right)^2+\left(\phantom{0-3}\right)^2}=\phantom{3\sqrt{2}}$\\
+	$d^2\left(\left(3,3\right),\left(6,6\right)\right):=\sqrt{\left(\phantom{6-3}\right)^2+\left(\phantom{6-3}\right)^2}=\phantom{3\sqrt{2}}$\\
+	$d^2\left(\left(3,3\right),\left(4,0\right)\right):=\sqrt{\left(\phantom{4-3}\right)^2+\left(\phantom{0-3}\right)^2}=\phantom{\sqrt{10}}$\\
+	$d^2\left(\left(3,3\right),\left(6,4\right)\right):=\sqrt{\left(\phantom{6-3}\right)^2+\left(\phantom{4-3}\right)^2}=\phantom{\sqrt{10}}$\\	
+	Total transport distance \phantom{$=2\cdot4\cdot3\sqrt{2}+2\cdot4\cdot3\sqrt{2}+2\cdot2\cdot\sqrt{10}+2\cdot2\cdot\sqrt{10}=93.18$}\\
+	Total transportation costs \phantom{$=93.18\cdot0.5=46.59$}
+	
+	\textbf{Note:} Euclidean distance measures the length of the direct line connecting two points (a.k.a Pythagorean distance). It provides good estimates of the distance between customers and locations when the distances between them are large, e.g. along highways or airline networks.
+	\end{solution}
+	
+	\item the Maximum-metric distance.	
+	\begin{solution}
+	$d^\infty\left(\left(x,y\right),\left(a_i,b_i\right)\right):=\max\left\{\left|a_i-x\right|,\left|b_i-y\right|\right\}$\\
+	$d^\infty\left(\left(3,3\right),\left(0,0\right)\right):=\max\left\{\left|\phantom{0-3}\right|,\left|\phantom{0-3}\right|\right\}=\phantom{3}$\\
+	$d^\infty\left(\left(3,3\right),\left(6,6\right)\right):=\max\left\{\left|\phantom{6-3}\right|,\left|\phantom{6-3}\right|\right\}=\phantom{s}$\\
+	$d^\infty\left(\left(3,3\right),\left(4,0\right)\right):=\max\left\{\left|\phantom{4-3}\right|,\left|\phantom{0-3}\right|\right\}=\phantom{3}$\\
+	$d^\infty\left(\left(3,3\right),\left(6,4\right)\right):=\max\left\{\left|\phantom{6-3}\right|,\left|\phantom{4-3}\right|\right\}=\phantom{3}$\\
+	Total transport distance \phantom{$=2\cdot4\cdot3+2\cdot4\cdot3+2\cdot2\cdot3+2\cdot2\cdot3=72$}\\
+	Total transportation costs \phantom{$72\cdot0.5=36$}
+	
+	\textbf{Note:} The Maximum-metric distance measures the distance between two points when this is essentially determined only by the largest (one-dimensional) distance. For example, the maximum distance is used for distance measurement in fully automated high-bay warehouses to determine the distance in time between two storage locations. (Assumption: The stacker crane is moved simultaneously in X and Y direction).
+	\end{solution}
+	
+		\item If $d^{p}(\mathbf{v,w}):=\left( \sum_{i=1}^{n} \left( \left| v_i - w_i \right| \right)^{p} \right)^{1/p}$ is an $\ell_p$-Metric in $\RR^{n}$, what properties (axioms) must such a distance measure satisfy in general?
+	\begin{solution}
+	A metric in $\R^n$ must satisfy the following axioms:	
+		\begin{enumerate}
+			\item $d\left(v,w\right) = 0$ if and only if $v = w$ $\in \R^n$ (Definition).
+			\item $d\left(v,w\right) = d\left(w,v\right)$ for all $v,w$ $\in \R^n$ (Symmetry)
+			\item $d\left(u,v\right) + d\left(v,w\right) \geq d\left(u,w\right)$ for all $u,v,w$ $\in \R^n$ (Triangle inequality)
+		\end{enumerate}
+	Reasoning:
+		\begin{enumerate}
+			\item Points with distance $0$ are identical.
+			\item The distance from Mainz to Frankfurt is the same as from Frankfurt to Mainz.
+			\item According to the triangle inequality, in a triangle the sum of the lengths of two sides a and b is always greater than or equal to the length of the third side c. $\Rightarrow$ ``An indirect path is never shorter than the direct path."
+		\end{enumerate}
+	\end{solution}
+	
+		\item Sketch the isodistance lines with distance one from the origin of coordinates (i.e. unit \emph{circles}) for the distance function $d^{p}(\mathbf{v,w})$ with:
+	\begin{enumerate}
+	\item $p = 1$
+	\item $1 \leq p \leq 2$
+ 	\item $p = 2$
+ 	\item $p \geq 2$
+ 	\item $p = \infty$.
+\end{enumerate}
+ What do you observe?
+ \begin{solution}
+
+ 	\uline{Isodistance lines:}
+		\begin{itemize}
+			\item All points which have the same distance from a certain point q.
+			\item All points $v,w$ which satisfy the equation $d^p(v,w)=1$.
+			\item All 2-dimensional vectors around a point q which have the same length.
+		\end{itemize}
+	\uline{Unit Circle:}\\
+	Set of all vectors around the zero vector (origin) with length one.\\
+	$d^p(v,w)=1$	where	$v = (0,0)$ and $w \in \R^2$
+	\begin{center}
+		\includegraphics[scale=0.7]{Uebungen/figures/isodistantlines}\\
+	\end{center}
+	Observe: As p increases, the $\ell_p$ metric converges to the Maximum-metric.
+	Explanation: The Maximum-metric is a limiting case ($p\rightarrow\infty$) of the $\ell_p$ metric.
+ \end{solution}
+\end{enumerate}

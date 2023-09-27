@@ -1,0 +1,282 @@
+\titledquestion{1-Median with Euclidean Distance}
+
+A warehouse location, that will supply five customers with coordinates $(0,1),(0,2),(0,4),(0,8),(0,10)$, needs to be selected. Let $w_i=2,4,3,4,3$ be the customer demands. The distance measurement is based on the Euclidean distance.
+\begin{enumerate}
+	\item \label{2.1} What process can you use to solve the above problem. What do you notice?
+			\begin{solution}
+			The 1-median problem with Euclidean distance is:\\
+			$\min_{(x,y)\in\R^2} F\left(x,y\right)=\min_{(x,y)\in\R^2} \sum_{i=1}^m w_i \sqrt{\left(x-a_i\right)^2+\left(y-b_i\right)^2}$\\
+			
+			\textbf{Note}: All $a_i=0$, that is, all customers lie on a straight line passing through $a_i=0$. It follows that an optimal location also lies in $x=0$. Then the Steiner-Weber problem simplifies to a 1-median problem with Manhattan distance.
+			
+			\underline{General rule:} If $a_i=c$ ($b_i=c$) for all $i$, then $x=c$ ($y=c$).
+			\begin{align*}
+			F\left(y,c\right)={}&\sum_{i=1}^m w_i \sqrt{\left(y-b_i\right)^2+0} \\
+			&\sum_{i=1}^m w_i \sqrt{\left(y-b_i\right)^2} \\	
+			&\sum_{i=1}^m w_i \left(\left|y-b_i\right|\right) \quad \fbox{$\sqrt{y^2}=|y|$ is valid for all $y \in \mathbb{R}$}\\
+			\end{align*}	
+		\end{solution}
+	
+	
+	\item \label{2.2} Now solve the problem.
+	
+	\begin{solution}
+		\phantom{The remaining problem can be easily solved as a 1-median problem with Manhattan distance in dimension 1:}
+		
+		Calculate $\frac{W}{2}= \frac{2+4+3+4+3}{2}=8$.\\
+		
+		\begin{tabular}{ccc|cccc}
+			$i$&$b_i$&$w_i$&$\sum_i w_i$\\
+			\hline
+			1&1&2&\phantom{2}\\
+			2&2&4&\phantom{6}\\
+			3&5&3&\phantom{$9>W/2$ (*)}\\
+			4&8&4&\phantom{13}\\
+			5&10&3&\phantom{16}\\
+		\end{tabular}
+		
+		Solution: \phantom{$x^*=0$, $y^*=5$.}
+	\end{solution}
+\end{enumerate}
+
+%Eine andere Lösungsmöglichkeit besteht darin, das Steiner-Weber-Problem direkt in $\R^2$ zu lösen.
+%Das Ihnen bekannte Iterationsverfahren nach Weiszfeld bzw. Miehle benötigt dazu den Gradienten der Zielfunktion, definiert als $\nabla F(x,y) := \left[ \partial F(x,y)/\partial x, \partial F(x,y)/\partial y \right]^\top$.
+\begin{enumerate}
+	\setcounter{enumi}{1}
+	%	\item Differenzieren Sie die Zielfunktion partiell nach $x$ bzw. $y$! %Wie lässt sich hier die aus den partiellen Ableitungen gewonnene Information ökonomisch sinnvoll interpretieren?
+	%	\begin{solution}
+	%	
+	%	Zielfunktion: $F\left(x,y\right)=\sum_{i=1}^m w_i \sqrt{\left(x-a_i\right)^2+\left(y-b_i\right)^2}$\\
+	%	Partielle Ableitung nach x:
+	%	\begin{align*}
+	%	\frac{\partial F(x,y)}{\partial x}&=\left[\left(\sum_{i=1}^m w_i \left(x-a_i\right)^2+\left(y-b_i\right)^2\right)^{\frac{1}{2}} \right]'\\
+	%	&=\sum_{i=1}^m \underbrace{w_i\cdot\frac{1}{2} \left(\left(x-a_i\right)^2+\left(y-b_i\right)^2\right)^{-\frac{1}{2}}}_{\text{äußere Ableitung}}\cdot \underbrace{2\left(x-a_i\right)}_{\text{innere Ableitung}}\\
+	%	&=\sum_{i=1}^m  \frac{2 w_i}{2\sqrt{\left(x-a_i\right)^2+\left(y-b_i\right)^2}} \cdot \left(x-a_i\right)\\	&=\sum_{i=1}^m\underbrace{\frac{w_i}{\sqrt{\left(x-a_i\right)^2+\left(y-b_i\right)^2}}}_{=: g_i(x,y)}\cdot\left(x-a_i\right)\\
+	%	&=\fbox{$\sum_{i=1}^m g_i\left(x,y\right)\left(x-a_i\right)$}
+	%	\end{align*}
+	%	
+	%	Analog ermittelt man die partielle Ableitung nach $y$: $\frac{\partial F(x,y)}{\partial y}=\sum_{i=1}^m g_i\left(x,y\right)\left(y-b_i\right)$.
+	%	\end{solution}
+	%	
+	%	\ifprintanswers
+	%	\newpage
+	%	\fi
+	\item Now solve the Steiner-Weber problem directly in $\R^2$ with the modified Miehle method. Set $\epsilon = 0.1$ and start at the origin $(x^0,y^0)=(0,0)$ for the first iteration! Select as a termination criterion $ \left\|(x^{t},y^{t})-(x^{t+1},y^{t+1})\right\|_{p=2} < 0.3 =\alpha$.
+	
+	\begin{solution}
+		
+		\textbf{Problem}: The Miehle method in the standard version does not provide a solution if, in an iteration $t$, the (searched) location coordinates $\left(x^t,y^t\right)$ coincide with a customer location.
+		
+		Therefore we modify the Miehle method so that a constant $\varepsilon>0$ is added under the root to calculate the Euclidean distance:
+		\[	d^2_{mod}((x,y),(a_i,b_i)) = \sqrt{\left(x-a_i\right)^2+\left(y-b_i\right)^2+\epsilon} \text{ mit } \epsilon>0
+		\]
+		
+		The terms in the partial derivatives of $F(x,y)$ change accordingly:	
+		\[ g_i^{mod}\left(x,y\right):=\frac{w_i}{\sqrt{\left(x-a_i\right)^2+\left(y-b_i\right)^2+\epsilon}}
+		\]\\
+				
+		The necessary conditions for an optimal location $\left(x^*,y^*\right)$ are:
+		\[	\frac{\partial F(x^*,y^*)}{\partial x}=0 \text{ bzw. }
+		\frac{\partial F(x^*,y^*)}{\partial y}=0
+		\]	
+		By substituting the partial derivative and rearranging, you will obtain in each case:
+		\[ x^*=\underbrace{\frac{\sum_{i=1}^m a_i
+				g_i^{mod}\left(x,y\right)}{\sum_{i=1}^m g_i^{mod}\left(x,y\right)}}_{=: G^x\left(x,y\right)}
+		\text{ and } y^*=\underbrace{\frac{\sum_{i=1}^m b_i g_i^{mod}\left(x,y\right)}{\sum_{i=1}^m g_i^{mod}\left(x,y\right)}}_{=:G^y\left(x,y\right)}
+		\]
+		
+		\textbf{Note}: $x$ and $y$ cannot be completely isolated since $g_i^{mod}\left(x,y\right)$ depends on $x$ and $y$. Therefore, the Miehle method computes the expressions $G^x\left(x,y\right)$ and $G^y\left(x,y\right)$ \textbf{iteratively} to determine the optimal site coordinates $(x^*,y^*)$.\\
+		
+		\uline {Procedure of the modified Miehle method}
+		\begin{itemize}
+			\item Choose a (starting) location $\left(x^0,y^0\right)\in\R$.
+			\item Calculate in each iteration $t$:
+			\begin{itemize}
+				\item $x^{t+1}:=G^x\left(x^t,y^t\right)=\frac{\sum_{i=1}^m a_i g_i\left(x^t,y^t\right)}{\sum_{i=1}^m g_i\left(x^t,y^t\right)}$
+				\item $y^{t+1}:=G^y\left(x^t,y^t\right)=\frac{\sum_{i=1}^m b_i g_i\left(x^t,y^t\right)}{\sum_{i=1}^m g_i\left(x^t,y^t\right)}$
+				\item with $g_i\left(x^t,y^t\right)=\frac{w_i}{\sqrt{\left(x^t-a_i\right)^2+\left(y^t-b_i\right)^2 + \epsilon}}$
+			\end{itemize}
+			\item Terminate (e.g. if distance between two successive locations is ``small enough''); otherwise set $t=t+1$ and repeat.
+		\end{itemize}
+		
+		\uline{Initialization:}
+		\begin{itemize}
+			\item $\left(x^0,y^0\right)=\left(0,0\right)$
+		\end{itemize}
+		
+		\begin{center}
+			\begin{tabular}{c|c|c|c|c|c|c}
+				t&0&1&2&3&4&5\\
+				\hline
+				$g_1^{mod}\left(x^t,y^t\right)$&\phantom{1.907}&\phantom{0.987}&\phantom{0.777}&\phantom{0.631}&0\phantom{.541} & \phantom{0.501}\\
+				$g_2^{mod}\left(x^t,y^t\right)$&\phantom{1.975} & \phantom{3.810}& \phantom{2.520} & \phantom{1.836} &\phantom{1.483}&\phantom{1.335}\\
+				$g_3^{mod}\left(x^t,y^t\right)$&\phantom{0.599}&\phantom{1.482}&\phantom{2.029}&\phantom{3.326}&\phantom{6.657}&\phantom{9.469}\\
+				$g_4^{mod}\left(x^t,y^t\right)$&\phantom{0.500}& \phantom{0.799}& \phantom{0.898}& \phantom{1.037}& \phantom{1.199}& \phantom{1.317}\\
+				$g_5^{mod}\left(x^t,y^t\right)$&\phantom{0.300} & \phantom{0.428} & \phantom{0.465} & \phantom{0.513} & \phantom{0.563} & \phantom{0.596}\\
+				\hline
+				$G^x\left(x^t,y^t\right)$&\phantom{0} & \phantom{0} & \phantom{0} & \phantom{0} & \phantom{0} & \phantom{0}\\
+				$G^y\left(x^t,y^t\right)$& \phantom{3.001} & \phantom{3.555} & \phantom{4.155} & \phantom{4.679} & \phantom{4.980} & \phantom{5.070}\\
+				\hline
+				$x^{t+1}$& \phantom{0} & \phantom{0} & \phantom{0} & \phantom{0} & \phantom{0} & \phantom{0}\\
+				$y^{t+1}$& \phantom{3.001} & \phantom{3.555} & \phantom{4.155} & \phantom{4.679} & \phantom{4.980} & \phantom{5.070}\\
+				\hline
+				$\left\|\left(x^t,y^t\right)-\left(x^{t+1},y^{t+1}\right)\right\|_{p=2}$& \phantom{3.001} & \phantom{0.554} & \phantom{0.600}& \phantom{0.524} & \phantom{0.302} & \phantom{\red{$0.089<0.3=\alpha$}}
+			\end{tabular}
+		\end{center}
+		
+		\newpage
+		\uline{Detailed calculations in the 1st iteration:}\\
+		$g_1^{mod}\left(0,0\right)=\frac{w_1}{\sqrt{\left(x-a_1\right)^2+\left(y-b_1\right)^2+\epsilon}}=\phantom{\frac{2}{\sqrt{\left(0-0\right)^2+\left(0-1\right)^2+0.1}}=\frac{2}{\sqrt{1.1}}=1.907}$\\
+		$g_2^{mod}\left(0,0\right)=\phantom{\frac{4}{\sqrt{\left(0-0\right)^2+\left(2-0\right)^2+0.1}}=\frac{4}{\sqrt{4.1}}=1.975}$\\
+		$g_3^{mod}\left(0,0\right)=\phantom{\frac{3}{\sqrt{\left(0-0\right)^2+\left(5-0\right)^2+0.1}}=\frac{3}{\sqrt{25.1}}=0.599}$\\
+		$g_4^{mod}\left(0,0\right)=\phantom{\frac{4}{\sqrt{\left(0-0\right)^2+\left(8-0\right)^2+0.1}}=\frac{4}{\sqrt{64.1}}=0.500}$\\
+		$g_5^{mod}\left(0,0\right)=\phantom{\frac{3}{\sqrt{\left(0-0\right)^2+\left(10-0\right)^2+0.1}}=\frac{3}{\sqrt{100.1}}=0.300}$\\
+		$G^x\left(0,0\right)=\phantom{\frac{0\cdot1.907+0\cdot1.975+0\cdot0.599+0\cdot0.5+0\cdot0.3}{1.907+1.975+0.599+0.5+0.3}=\frac{0}{5.281}=0}$\\
+		$G^y\left(0,0\right)=\phantom{\frac{1\cdot1.907+2\cdot1.975+5\cdot0.599+8\cdot0.5+10\cdot0.3}{1.907+1.975+0.599+0.5+0.3}=\frac{15.852}{5.281}=3.001}$\\
+		$x^1=0$ und $y^1 = 3.001$\\
+		$\left\|\left(x^t,y^t\right)-\left(x^{t+1},y^{t+1}\right)\right\|_{p=2}=\phantom{\sqrt{\left(x^0-x^1\right)^2+\left(y^0-y^1\right)^2}=\sqrt{\left(0-0\right)^2+\left(0-3.001\right)^2}=3.001}$\\
+		
+		%When comparing with the result from subtask 1, it is noticeable that the x-coordinates in both solutions differ considerably. The reason is the relatively early termination of the Miehle method. Iterating further, $x^t$ approaches the value 4.
+	\end{solution}
+\end{enumerate}
+
+
+
+
+
+
+%Der Standort eines Lagers zur Belieferung von fünf Kunden mit den Koordinaten $(0,0),(2,0),(4,0),(8,0),(10,0)$ ist zu planen. Die Nachfragen seien $w_i=3,4,2,4,3$. Die Abstandsmessung erfolgt auf Basis der Euklidischen Distanz.
+%\begin{enumerate}
+%	\item \label{2.1} Lösen Sie das Steiner-Weber-Problem in Dimension eins und begründen Sie, warum dieses Vorgehen gleichzeitig eine optimale Lösung des Steiner-Weber-Problems in $\R^2$ liefert!
+%
+%	\begin{solution}
+%	Das 1-Median-Problem mit Euklidischer Distanz lautet:\\
+%	$\min_{(x,y)\in\R^2} F\left(x,y\right)=\min_{(x,y)\in\R^2} \sum_{i=1}^m w_i \sqrt{\left(x-a_i\right)^2+\left(y-b_i\right)^2}$\\
+%	
+%	\textbf{Beachte}: Alle $b_i=0$, d.h. alle Kunden liegen auf einer Geraden, die durch $b_i=0$ verläuft. Daraus folgt, dass ein optimaler Standort auch in $y=0$ liegt. Dann vereinfacht sich das Steiner-Weber-Problem zu einem 1-Median-Problem mit Manhattan-Distanz.
+%	
+%	\underline{Allgemein:} Wenn $b_i=c$ ($a_i=c$) für alle $i$, dann $y=c$ ($x=c$).
+%	\begin{align*}
+%	F\left(x,c\right)={}&\sum_{i=1}^m w_i \sqrt{\left(x-a_i\right)^2+0} \\
+%	&\sum_{i=1}^m w_i \sqrt{\left(x-a_i\right)^2} \\	
+%	&\sum_{i=1}^m w_i \left(\left|x-a_i\right|\right) \quad \fbox{Es gilt $\sqrt{x^2}=|x|$ für alle $x \in \mathbb{R}$}\\
+%	\end{align*}	
+%	Das verbleibende Problem kann als 1-Median-Problem mit Manhattan-Distanz in Dimension 1 einfach gelöst werden:
+%	
+%	Berechne $\frac{W}{2}= \frac{3+4+2+4+3}{2}=8$.\\
+%	
+%	\begin{tabular}{ccc|cccc}
+%	$i$&$a_i$&$w_i$&$\sum_i w_i$\\
+%	\hline
+%	1&0&3&3\\
+%	2&2&4&7\\
+%	3&4&2&$9>W/2$ (*)\\
+%	4&8&4&13\\
+%	5&10&3&16\\
+%	\end{tabular}
+%	
+%	Lösung: $x^*=4$, $y^*=0$.
+%	\end{solution}
+%\end{enumerate}
+%
+%%Eine andere Lösungsmöglichkeit besteht darin, das Steiner-Weber-Problem direkt in $\R^2$ zu lösen.
+%%Das Ihnen bekannte Iterationsverfahren nach Weiszfeld bzw. Miehle benötigt dazu den Gradienten der Zielfunktion, definiert als $\nabla F(x,y) := \left[ \partial F(x,y)/\partial x, \partial F(x,y)/\partial y \right]^\top$.
+%\begin{enumerate}
+%\setcounter{enumi}{1}
+%%	\item Differenzieren Sie die Zielfunktion partiell nach $x$ bzw. $y$! %Wie lässt sich hier die aus den partiellen Ableitungen gewonnene Information ökonomisch sinnvoll interpretieren?
+%%	\begin{solution}
+%%	
+%%	Zielfunktion: $F\left(x,y\right)=\sum_{i=1}^m w_i \sqrt{\left(x-a_i\right)^2+\left(y-b_i\right)^2}$\\
+%%	Partielle Ableitung nach x:
+%%	\begin{align*}
+%%	\frac{\partial F(x,y)}{\partial x}&=\left[\left(\sum_{i=1}^m w_i \left(x-a_i\right)^2+\left(y-b_i\right)^2\right)^{\frac{1}{2}} \right]'\\
+%%	&=\sum_{i=1}^m \underbrace{w_i\cdot\frac{1}{2} \left(\left(x-a_i\right)^2+\left(y-b_i\right)^2\right)^{-\frac{1}{2}}}_{\text{äußere Ableitung}}\cdot \underbrace{2\left(x-a_i\right)}_{\text{innere Ableitung}}\\
+%%	&=\sum_{i=1}^m  \frac{2 w_i}{2\sqrt{\left(x-a_i\right)^2+\left(y-b_i\right)^2}} \cdot \left(x-a_i\right)\\	&=\sum_{i=1}^m\underbrace{\frac{w_i}{\sqrt{\left(x-a_i\right)^2+\left(y-b_i\right)^2}}}_{=: g_i(x,y)}\cdot\left(x-a_i\right)\\
+%%	&=\fbox{$\sum_{i=1}^m g_i\left(x,y\right)\left(x-a_i\right)$}
+%%	\end{align*}
+%%	
+%%	Analog ermittelt man die partielle Ableitung nach $y$: $\frac{\partial F(x,y)}{\partial y}=\sum_{i=1}^m g_i\left(x,y\right)\left(y-b_i\right)$.
+%%	\end{solution}
+%%	
+%%	\ifprintanswers
+%%	\newpage
+%%	\fi
+%	\item Lösen Sie nun das Steiner-Weber-Problem direkt in $\R^2$ mit dem modifizierten Miehle-Verfahren. Setzen Sie $\epsilon = 0.1$ und starten Sie im Koordinatenursprung $(x^0,y^0)=(0,0)$! Wählen Sie als Abbruchkriterium $ \left\|(x^{t},y^{t})-(x^{t+1},y^{t+1})\right\|_{p=2} < 0,3 =\alpha$.
+%	
+%	\begin{solution}
+%	
+%	\textbf{Problem}: Das Miehle-Verfahren in der Standardversion liefert dann keine Lösung, wenn in einer Iteration $t$ die (gesuchten) Standortkoordinaten $\left(x^t,y^t\right)$ mit einem Kundenstandort übereinstimmen.
+%	
+%Deshalb modifiziert man das Miehle-Verfahren in dem Sinne, dass ein konstantes $\varepsilon>0$ unter die Wurzel zur Berechnung der euklidischen Distanz hinzuaddiert:
+%	\[	d^2_{mod}((x,y),(a_i,b_i)) = \sqrt{\left(x-a_i\right)^2+\left(y-b_i\right)^2+\epsilon} \text{ mit } \epsilon>0
+%\]
+%
+%	Entsprechend verändern sich die Terme 	
+%	\[ g_i^{mod}\left(x,y\right):=\frac{w_i}{\sqrt{\left(x-a_i\right)^2+\left(y-b_i\right)^2+\epsilon}}
+%\]
+%in den partiellen Ableitungen von $F(x,y)$.\\
+%	
+%	Notwendige Bedingungen für einen optimalen Standort $\left(x^*,y^*\right)$ sind:
+%	\[	\frac{\partial F(x^*,y^*)}{\partial x}=0 \text{ bzw. }
+%		\frac{\partial F(x^*,y^*)}{\partial y}=0
+%\]	
+%	Durch Einsetzen der partiellen Ableitung und Umstellen erhält man jeweils:
+%	\[ x^*=\underbrace{\frac{\sum_{i=1}^m a_i
+%	g_i^{mod}\left(x,y\right)}{\sum_{i=1}^m g_i^{mod}\left(x,y\right)}}_{=: G^x\left(x,y\right)}
+%		\text{ bzw. } y^*=\underbrace{\frac{\sum_{i=1}^m b_i g_i^{mod}\left(x,y\right)}{\sum_{i=1}^m g_i^{mod}\left(x,y\right)}}_{=:G^y\left(x,y\right)}
+%\]
+%	
+%	\textbf{Beachte}: $x$ und $y$ lassen sich nicht vollständig isolieren, da $g_i^{mod}\left(x,y\right)$ von $x$ und $y$ abhängen. Deshalb berechnet das Miele-Verfahren die Ausdrücke $G^x\left(x,y\right)$ und $G^y\left(x,y\right)$ \textbf{iterativ}, um damit die optimalen Standortkoordinaten $(x^*,y^*)$  zu bestimmen.\\
+%	
+%	\uline{Vorgehensweise modifiziertes Miehle-Verfahren}
+%		\begin{itemize}
+%			\item Wähle einen (Anfangs-)Standort $\left(x^0,y^0\right)\in\R$.
+%			\item Berechne in jeder Iteration $t$:
+%				\begin{itemize}
+%					\item $x^{t+1}:=G^x\left(x^t,y^t\right)=\frac{\sum_{i=1}^m a_i g_i\left(x^t,y^t\right)}{\sum_{i=1}^m g_i\left(x^t,y^t\right)}$
+%					\item $y^{t+1}:=G^y\left(x^t,y^t\right)=\frac{\sum_{i=1}^m b_i g_i\left(x^t,y^t\right)}{\sum_{i=1}^m g_i\left(x^t,y^t\right)}$
+%					\item mit $g_i\left(x^t,y^t\right)=\frac{w_i}{\sqrt{\left(x^t-a_i\right)^2+\left(y^t-b_i\right)^2 + \epsilon}}$
+%			\end{itemize}
+%			\item Abbruch z.B. dann, wenn Abstand zwischen zwei aufeinanderfolgenden Standorten ``klein genug'' ist; sonst setze $t=t+1$ und wiederhole
+%		\end{itemize}
+%	
+%	\uline{Initialisierung:}
+%		\begin{itemize}
+%			\item $\left(x^0,y^0\right)=\left(0,0\right)$
+%		\end{itemize}
+%		
+%\begin{center}
+%		\begin{tabular}{c|c|c|c}
+%		t&0&1&2\\
+%		\hline
+%		$g_1^{mod}\left(x^t,y^t\right)$&9,487&2,824&1,34\\
+%		$g_2^{mod}\left(x^t,y^t\right)$&1,975&3,863&10,443\\
+%		$g_3^{mod}\left(x^t,y^t\right)$&0,498&0,666&1,104\\
+%		$g_4^{mod}\left(x^t,y^t\right)$&0,5&0,572&0,691\\
+%		$g_5^{mod}\left(x^t,y^t\right)$&0,3&0,334&0,385\\
+%		\hline
+%		$G^x\left(x^t,y^t\right)$&1,014&2,216&2,484\\
+%		$G^y\left(x^t,y^t\right)$&0&0&0\\
+%		\hline
+%		$x^{t+1}$&1,014&2,216&2,484\\
+%		$y^{t+1}$&0&0&0\\
+%		\hline
+%		$\left\|\left(x^t,y^t\right)-\left(x^{t+1},y^{t+1}\right)\right\|_{p=2}$&1,014&1,202&\red{$0,268<0,3=\alpha$}
+%		\end{tabular}
+%\end{center}
+%		
+%		\newpage
+%		\uline{Nebenrechnungen in der 1. Iteration:}\\
+%		$g_1^{mod}\left(0,0\right)=\frac{w_1}{\sqrt{\left(x-a_1\right)^2+\left(y-b_1\right)^2+\epsilon}}=\frac{3}{\sqrt{\left(0-0\right)^2+\left(0-0\right)^2+0,1}}=\frac{3}{\sqrt{0,1}}=9,487$\\
+%		$g_2^{mod}\left(0,0\right)=\frac{4}{\sqrt{\left(2-0\right)^2+\left(0-0\right)^2+0,1}}=\frac{4}{\sqrt{4,1}}=1,975$\\
+%		$g_3^{mod}\left(0,0\right)=\frac{2}{\sqrt{\left(4-0\right)^2+\left(0-0\right)^2+0,1}}=\frac{2}{\sqrt{16,1}}=0,498$\\
+%		$g_4^{mod}\left(0,0\right)=\frac{4}{\sqrt{\left(8-0\right)^2+\left(0-0\right)^2+0,1}}=\frac{4}{\sqrt{64,1}}=0,5$\\
+%		$g_5^{mod}\left(0,0\right)=\frac{3}{\sqrt{\left(10-0\right)^2+\left(0-0\right)^2+0,1}}=\frac{3}{\sqrt{100,1}}=0,3$\\
+%		$G^x\left(0,0\right)=\frac{0\cdot9,487+2\cdot1,975+4\cdot0,498+8\cdot0,5+10\cdot0,3}{9,487+1,975+0,498+0,5+0,3}=\frac{12,942}{12,76}=1,014$\\
+%		$G^y\left(0,0\right)=\frac{0\cdot9,487+0\cdot1,975+0\cdot0,498+0\cdot0,5+0\cdot0,3}{9,487+1,975+0,498+0,5+0,3}=\frac{0}{12,76}=0$\\
+%		$x^1=G^x\left(1,014;0\right)$ und $y^1 = G^y\left(0;0\right)$\\
+%		$\left\|\left(x^t,y^t\right)-\left(x^{t+1},y^{t+1}\right)\right\|_{p=2}=\sqrt{\left(x^0-x^1\right)^2+\left(y^0-y^1\right)^2}=\sqrt{\left(0-1,014\right)^2+\left(0-0\right)^2}=1,014$\\
+%		
+%Beim Vergleich mit dem Ergebnis aus Teilaufgabe 1 fällt auf, dass sich die x-Koordinaten in beiden Lösungen erheblich unterscheiden. Grund ist der relativ frühzeitige Abbruch des Miehle-Verfahrens. Iteriert man weiter, so nähert sich $x^t$ dem Wert 4 an.
+%	\end{solution}
+%\end{enumerate}

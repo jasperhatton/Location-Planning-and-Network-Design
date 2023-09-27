@@ -1,0 +1,186 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Klausurmakro                 Version 07.09.2010  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% RWTH Aachen                                      %%
+%% Lehrstuhl für medizinische Informationstechnik   %%
+%% Thomas Schlebusch schlebusch@hia.rwth-aachen.de  %%
+%%                                                  %%
+%% Universität Mainz                                %%
+%% Lehrstuhl für BWL, insb. Logistikmanagement      %%
+%% Claudia Bode claudia.bode@uni-mainz.de           %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% English Translation: Jasper Hatton  [26.09.2023] %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%Mit Musterlösung
+\documentclass[answers]{exam}
+%Ohne Musterlösung
+%\documentclass{exam}
+
+\newboolean{showgap}
+%\setboolean{showgap}{true}
+\setboolean{showgap}{false}
+
+
+\input header
+
+
+\begin{center}
+{\Large Exercise 03}
+\end{center}
+\footnotesize
+
+\input prepictex
+\input pictexwd
+\input postpictex
+
+
+\newcommand{\BigO} {\mbox{$\mathcal O$\,}}
+\newcommand{\Eins}{{1\!\!1}}
+\renewcommand{\emptyset}{\varnothing}
+\renewcommand{\epsilon}{\varepsilon}
+
+
+\begin{questions}
+
+\input Uebungen/1Median_Manhattan_Ve
+
+\input Uebungen/1Median_Euclidean
+
+\input Uebungen/Miehle_Method
+
+
+
+%%\ifprintanswers
+%%\newpage
+%%\fi
+%\titledquestion{Transportation-Location-Problem}
+%Ein Anbieter von luxusorientierten Konsumgütern beliefert vier europäische Handelshäuser über ein Zentrallager, wobei sich der überwiegende Teil der Nachfragemenge traditionell auf die beiden westeuropäischen Abnehmer $i=1,2$ mit den Koordinaten $(a_i,b_i)=(3,0),(3,4)$ konzentriert. Seit einiger Zeit zeichnet sich jedoch eine mengenmäßige Annäherung der mittel- und osteuropäischen Kunden $i=3,4$ mit den Koordinaten $(a_i,b_i)=(5,0),(5,4)$ an westeuropäische Verhältnisse ab. Out-of-Stock-Situationen beugt das Unternehmen seit jeher mit einer bedarfs\-orientierten Anpassung der Produktions- und Lagerkapazitäten vor. In Zukunft wird aus Sicht der Geschäftsführung ein Problem darin gesehen, das prognostizierte, jährliche Transportaufkommen $w_i=100,200,225,75$ so zu bewältigen, dass die damit verbundenen Transportaktivitäten insgesamt minimal bleiben. Man erwägt daher eine Restrukturierung des Distributionssystems, einschließlich aller bisherigen Lieferbeziehungen. Insbesondere sollen zwei auf der "`grünen Wiese"' zu planende dezentrale Regionallager das alte Zentrallager ersetzen. Sie als Experte für quantitative Planung sollen die Geschäftsführung bei der Wahl der neuen Lagerstandorte unterstützen. Gehen Sie dabei von der Luftlinienentfernung als geeignetem Abstandsmaß aus.\\
+%
+%\begin{enumerate}	
+%	\item Formulieren Sie ein Modell für das Transportation-Location-Problem.
+%	\begin{solution}
+%	\uline{Gegeben:}
+%		\begin{itemize}
+%			\item Indizes: $i\in \left\{1,2,3,4\right\}$
+%			\item Kundenorte: $\left(3,0\right)$, $\left(3,4\right)$, $\left(5,0\right)$, $\left(5,4\right)$
+%			\item Transportmengen: $w_1=100$, $w_2=200$, $w_3=225$, $w_4=75$
+%			\item Anzahl der Zentrallager: $p=2$
+%			\item Distanzfunktion: Euklidisch
+%		\end{itemize}
+%	\uline{Gesucht:}
+%		\begin{itemize}
+%			\item Koordinaten $(x_j,y_j)$ der Zentrallager (\textbf{Lokation})
+%			\item Zuordnungen $w_{ij}$, welcher Teil des Bedarfs $w_i$ von Kunde $i$ durch Standort $j$ abgedeckt wird (\textbf{Allokation})
+%		\end{itemize}
+%	\uline{Modell:}\\
+%	\begin{align*}
+%	\min&\sum_{j=1}^p\sum_{i=1}^m w_{ij}\sqrt{\left(x_j-a_i\right)^2+\left(y_j-b_i\right)^2}\\
+%	\text{s.t. }&\sum_{j=1}^p w_{ij}=w_i \quad \forall i \\
+%	&w_{iv}\geq 0 \quad \forall i,j\\
+%	&x_j,y_j \in\R \quad \forall j
+%	\end{align*}
+%	
+%	Beachte: Die Zielfunktion ist nicht-linear (Multiplikation von Variablen)
+%	\end{solution}
+%	
+%%	\ifprintanswers
+%%	\newpage
+%%	\fi
+%	\item Führen Sie eine Iteration der Cooper-Heuristik für den unkapazitierten Fall aus, beginnend mit den Startkoordinaten $(x^1_1,y^1_1,x^1_2,y^1_2)=(4,0,4,4)$, und lösen Sie das Steiner-Weber-Problem in $\R^1$.
+%	\begin{solution}
+%	
+%		\uline{Vorgehensweise der Cooper-Heuristik:}	
+%		\begin{itemize}
+%			\item Wähle $p$ Standorte als Startlösung
+%			\item (Re-)Allokation für gegebene Standorte (kapazitiert: Transportproblem lösen, unkapazitiert: einfache Inspektion)
+%			\item Relokation bei gegebener Allokation (Löse $p$ Steiner-Weber-Probleme)
+%			\item Iteriere bis sich die Standorte nicht mehr verändern
+%		\end{itemize}
+%		
+%		\uline{1. Iteration}\\
+%		Gegeben Startkoordinaten $\left(x_1^1,y_1^1\right)=\left(4,0\right)$, $\left(x_2^1,y_2^1\right)=\left(4,4\right)$ und Kundendaten				
+%\begin{center}
+%		\begin{tabular}{c|cccc}
+%		i&1&2&3&4\\
+%		\hline
+%		$a_i$&3&3&5&5\\
+%		$b_i$&0&4&0&4\\
+%		$w_i$&100&200&225&75\\
+%		\end{tabular}	
+%\end{center}
+%		
+%		\uline{Reallokation}: zunächst Berechnung der Luftliniendistanzen	
+%\begin{center}
+%	\begin{tabular}{c|cccc}
+%		$c_{ij}:=d^2$&i=1&i=2&i=3&i=4\\
+%		\hline
+%		j=1&1&4,123&1&4,123\\
+%		j=2&4,123&1&4,123&1
+%		\end{tabular}
+%\end{center}
+%		
+%		Dann optimale Anbindung der Kunden durch einfache Inspektion:
+%\begin{center}
+%		\begin{tabular}{c|cccc}
+%		$w_{ij}$&i=1&i=2&i=3&i=4\\
+%		\hline
+%		j=1&100&0&225&0\\
+%		j=2&0&200&0&75\\
+%		\end{tabular}\\
+%\end{center}
+%		
+%		\uline{Relokation}:
+%		\begin{itemize}
+%			\item Standort $j=1$ sind folgende Kunden zugeordnet:
+%					\begin{center}
+%					\begin{tabular}{c|cc}
+%					i&1&3\\
+%					\hline
+%					$a_i$&3&5\\
+%					$b_i$&0&0 (!)\\
+%					\end{tabular}
+%					\end{center}
+%			\item Löse eindimensionales Weber-Problem für Standort $j=1$ mit Manhattan-Distanz:
+%	
+%			Berechne $W/2=\left(100+225\right)/2=162,5$\\
+%			
+%			\begin{tabular}{c|c|c|c}
+%			i&$a_i$&$w_i$&KumBedarf\\
+%			\hline
+%			1&3&100&100\\
+%			3&5&225&$325 > 162,5$ (*)\\
+%			\end{tabular}\\
+%			
+%			$x^2_1=5$, $y^2_1=0$
+%			
+%			\item Standort $j=2$ sind folgende Kunden zugeordnet:
+%\begin{center}
+%	\begin{tabular}{c|cc}
+%	i&2&4\\
+%	\hline
+%	$a_i$&3&5\\
+%	$b_i$&4&4 (!)\\
+%	\end{tabular}
+%\end{center}
+%
+%			\item Löse eindimensionales Weber-Problem für Standort $j=2$ mit Manhattan-Distanz:
+%						
+%			Berechne $W/2=\left(200+75\right)/2=137,5$\\
+%			
+%				\begin{tabular}{c|c|c|c}
+%				i&$a_i$&$w_i$&KumBedarf\\
+%				\hline
+%				2&3&200& $200 > 137,5$ (*)\\
+%				4&5&75&275\\
+%				\end{tabular}
+%		
+%			$x^2_2=3$, $y^2_2=4$
+%				
+%		\end{itemize}
+%	\end{solution}
+%\end{enumerate}
+
+\end{questions}
+\end{document}

@@ -1,0 +1,83 @@
+\usepackage[latin1]{inputenc}
+
+% Einbindung von PS-Grafik ermöglichen
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes,positioning,calc,shapes.geometric,automata}
+\usetikzlibrary{decorations.pathmorphing} % noisy shapes
+\usetikzlibrary{fit}                      % fitting shapes to coordinates
+\usetikzlibrary{backgrounds}              % drawing the background after the foregro
+\tikzstyle{vertex}=[circle,fill=white,draw,line width=2pt,minimum size=20pt,inner sep=0pt]
+\tikzstyle{small vertex}=[circle,fill=white,draw,line width=1pt,minimum size=15pt,inner sep=0pt]
+\tikzstyle{selected vertex} = [vertex, fill=red!24]
+\tikzstyle{blue vertex} = [vertex, fill=blue!24]
+\tikzstyle{edge} = [draw,thick,-]
+\tikzstyle{weight_style} = [text opacity=1,font=\tiny]
+\tikzstyle{selected edge} = [draw,line width=5pt,-,red!50]
+\tikzstyle{ignored edge} = [draw,line width=5pt,-,black!20]
+\tikzstyle{red edge} = [line width=2pt,ultra thick,-,red]
+\tikzstyle{green edge} = [draw,line width=2pt,thick,-,green]
+\tikzstyle{rsquare} = [square,draw,rotate=45,fill=red,scale=0.5]
+
+\usepackage{verbatim}
+\usepackage{fancyvrb}
+\usepackage{pgfplots}
+%Mathematische Zeichen
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+
+% fancy list environments
+\usepackage{enumitem}
+% Text / Formel durchstreichen
+\usepackage{ulem}
+
+% Zur Darstellung des Eurosymbols
+\usepackage{eurosym}
+
+\usepackage{diagbox}
+\usepackage{hyperref}
+\usepackage{color}
+\newcommand{\red}[1]{{\color{red}#1}}
+\newcommand{\green}[1]{{\color[rgb]{0,0.6,0}#1}}
+\newcommand{\blue}[1]{{\color{blue}#1}}
+\newcommand{\gray}[1]{{\color{gray}#1}}
+\newcommand{\brown}[1]{{\color{brown}#1}}
+\newcommand{\violet}[1]{{\color{violet}#1}}
+\newcommand{\orange}[1]{{\color{orange}#1}}
+
+%%%%%% Examformateinstellungen %%%%%%%%%%%%%%%%
+% Nummern in den einzelnen Teilaufgaben
+\renewcommand\thepartno{\arabic{partno}}
+%Kästchen für die MC-Aufgaben
+\checkboxchar{$\square$}
+% Format für die Gesamtpunktzahl einer Aufgabe
+\qformat{\bf{Question} \thequestion \; (\thequestiontitle) \hfill}
+
+
+\newcommand{\mAm}{\mbox{}\hfill\mbox{(multiple answers possible)}}
+\newcommand{\RR}{\mathbb{R}}
+
+%Show GAP or not
+\ifthenelse{\boolean{showgap}}{}{\renewcommand{\phantom}[1]{#1}}
+
+\usepackage[ngerman]{babel}
+\chpword{Punkte}
+\pointpoints{Punkt}{Punkte}
+\cfoot[]{Page \thepage}
+\begin{document}
+\selectlanguage{ngerman}
+%%
+%% KOPF
+%%
+\noindent
+\input lehrst
+\hfill
+\input semester

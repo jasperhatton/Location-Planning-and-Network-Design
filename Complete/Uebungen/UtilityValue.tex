@@ -1,0 +1,84 @@
+
+%\newcommand{\BigO} {\mbox{$\mathcal O$\,}}
+%\newcommand{\Eins}{{1\!\!1}}
+\renewcommand{\emptyset}{\varnothing}
+\renewcommand{\epsilon}{\varepsilon}
+
+
+\titledquestion{Utility Value} %(vgl. Günther und Tempelmeier, 2006)
+
+A company is planning to set up a second production facility, for which a pre-selection of four locations has already been made. As a new intern in strategic production planning, you are now tasked with qualitatively evaluating the alternative courses of action within the framework of a Utility Value Analysis.
+\begin{enumerate}
+	\item Briefly explain the basic idea of the Utility Value Analysis!
+	\begin{solution}
+		The Utility Value Analysis is a point evaluation procedure, which evaluates all locations with regard to the location features. The advantages of the Utility Value Analysis lie in its simple handling and plausible structure.\\
+		The goals here are:
+		\begin{enumerate}
+			\item the transformation of the qualitative assessment into a uniform quantitative benefit scale
+			\item to rank the alternative courses of action
+		\end{enumerate}
+		
+		\uline{Procedure for Utility Value Analysis:}
+			\begin{enumerate}
+				\item Establish the location features $F_i$ (=criteria).
+				\item Determine the weights $w_i$ for each criteria ( typically the sum of the weights is one; i.e. $\sum_i w_i =1$ )
+				\item Evaluation of the criteria at each location $X_j$ (=alternatives):
+					\begin{itemize}
+						\item standardized scale (e.g. points from 1 to 10).
+						\item result as a partial utility value $u_{ij}$
+					\end{itemize}
+				\item Calculation of the ``total Utility'" for each alternative $X_j$ as the weighted sum of the partial utility values $\sum_i w_i u_{ij}$.
+				\item	Choose the alternative $X_j$ with highest ``total Utility'"	
+			\end{enumerate}
+	\end{solution}
+\end{enumerate}
+
+The company's internal decision-makers evaluated sites A,B,C,D with regard to six (subjectively) weighted criteria on a standardized scale from 1 (poor) to 9 (very good). The following table summarizes the evaluation results, the so-called partial utility values.
+\begin{table}[htbp]
+  \centering
+    \begin{tabular}{l|cccccc}
+    Location Feature & Weighting & A & B & C & D\\
+    \hline
+(1) Quality/Price of Labor & 0.25 & 9 & 5 & 6 & 8 \\
+(2) Connection to Transportation Infrastructure  & 0.20 & 6 & 6 & 5 & 4 \\
+(3) Raw Material Reserves & 0.20 & 3 & 4 & 4 & 6 \\
+(4) Sales Potential of the Surrounding Area & 0.15 & 7 & 4 & 6 & 5 \\
+(5) Distribution of Income/Purchasing Power & 0.10 & 3 & 4 & 6 & 1 \\
+(6) Government Subsidies  & 0.10 & 3 & 7 & 7 & 5 \\
+    \end{tabular}
+\end{table}
+\begin{enumerate}
+\setcounter{enumi}{1}
+	\item What is your recommended course of action for the company according to the Utility Value Analysis? What are the limitations with regard to the meaningfulness of your result?
+		\begin{solution}
+		
+		\uline{Recommended course of action according to the Utility Value Analysis}\\
+			\begin{tabular}{c|cccccc}
+    Feature & Weighting & A & B & C & D\\
+   		 \hline
+				(1)& 0.25 & 9 & 5 & 6 & 8 \\
+				(2)& 0.20 & 6 & 6 & 5 & 4 \\
+				(3)& 0.20 & 3 & 4 & 4 & 6 \\
+				(4)& 0.15 & 7 & 4 & 6 & 5 \\
+				(5)& 0.10 & 3 & 4 & 6 & 1 \\
+				(6)& 0.10 & 3 & 7 & 7 & 5 \\
+			\hline
+			&1&5.7&4.95&5.5&5.35\\
+    	\end{tabular}\\
+    	Determine the total Utility Value $\sum_i w_i u_{ij}$\\
+    	Location A: $0.25\cdot9+0.2\cdot6+0.2\cdot3+0.15\cdot7+0.1\cdot3+0.1\cdot3=5.7$\\
+    	Location B: $0.25\cdot5+0.2\cdot6+0.2\cdot4+0.15\cdot4+0.1\cdot4+0.1\cdot7=4.95$\\
+    	Location C: $0.25\cdot6+0.2\cdot5+0.2\cdot4+0.15\cdot6+0.1\cdot6+0.1\cdot7=5.5$\\
+    	Location D: $0.25\cdot8+0.2\cdot4+0.2\cdot6+0.15\cdot5+0.1\cdot1+0.1\cdot5=5.35$\\
+    	Choose Location A, as $5.7=max\left\{5.7;~4.95;~5.5;~5.35\right\}$.\\
+    	
+		\uline{Criticism of Utility Value Analysis:}	\\
+		\begin{itemize}
+			\item Interpretation of total utility: total utility is not meaningfully interpretable in economic terms.
+			\item Interchangeability of different objectives: Poor evaluation in one criterion can be fully compensated by other criteria (e.g. location D regarding labor market and purchasing power)
+			\item Independence of criteria (e.g. 4 and 5)
+			\item Objective separation can possibly distort the criteria weighting
+			\item Weights do not mean importance per se, but are to be chosen depending on the scale
+			\end{itemize}
+			\end{solution}
+\end{enumerate}
